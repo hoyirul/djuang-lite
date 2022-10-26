@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('user_order_schedules', function (Blueprint $table) {
             $table->id();
-            $table->string('role');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('schedule_id')->constrained();
+            $table->string('order_id', 20)->nullable();
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('user_order_schedules');
     }
 };

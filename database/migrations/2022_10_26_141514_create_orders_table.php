@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('role');
+        Schema::create('orders', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->date('order_date')->nullable();
+            $table->float('total');
+            $table->enum('status', ['pending', 'processing', 'done'])->default('pending');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('orders');
     }
 };
