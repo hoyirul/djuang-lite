@@ -155,18 +155,4 @@ class PaymentController extends Controller
         return redirect()->to('/operator/payment/waiting')
                     ->with('success', 'Data changed successfully!');
     }
-
-    public function push_notif($message, $fcm_token){
-        $authorized = 'key=AAAACd3VpkQ:APA91bEI6Jy7g7sM-FPLB1WYeFfC8nFX51EVwDxHFy1bKtmPDZltPZtITrpVidzIaUt14zLyXlA4d6I15YnpPjo0zq6EyV06YTNfhynzHUuHJj1Zm4fggX2o69-EWB5pCBPtVqBmW7ou';
-        // eTCFbsieTN25j1_FKewN4f:APA91bFhl7yo6UHBdMmT89d7fqFSYVNGEDop37tQA9wuJ0b7U_RKzPgmUT_m16QJYt6zReCJIre2tbp3YGwSRcxALDx6wfJ0H9Crnz2yyfQaLxggO8pt6Ji5HAVQK_fWE8eFiO8MmLby
-        Http::accept('application/json')->withHeaders([
-            'Authorization' => $authorized
-        ])->post('https://fcm.googleapis.com/fcm/send', [
-            'registration_ids' => [$fcm_token],
-            'notification' => [
-                'body' => $message['body'],
-                'title' => $message['title']
-            ]
-        ]);
-    }
 }
