@@ -39,10 +39,10 @@
             @foreach ($tables as $item)
               <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{ $item->user->email }}</td>
+                <td>{{ $item->email }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->phone }}</td>
-                <td>{{ $item->user->role->role_name }}</td>
+                <td>{{ $item->role->role }}</td>
                 <td>
                   <form action="/operator/operator/{{ $item->user->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
                     @csrf

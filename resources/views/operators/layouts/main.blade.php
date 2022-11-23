@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Melijo.id | 2022 | Belanja semua di melijo.</title>
+    <title>Djuang.id | {{ now() }} | Semua Bisa dengan Djuang.</title>
     <!-- Custom fonts for this template-->
     <link href="{{ asset('operators/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Operator;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\UserOperator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -21,7 +20,7 @@ class OperatorController extends Controller
      */
     public function index(){
         $title = 'Operator Table';
-        $tables = UserOperator::with('user')->get();
+        $tables = User::with('role')->get();
         return view('operators.operators.index', compact([
             'title', 'tables'
         ]));
@@ -69,7 +68,7 @@ class OperatorController extends Controller
 
         $user = User::latest()->first();
 
-        UserOperator::create([
+        User::create([
             'user_id' => $user->id,
             'name' => $request->name,
             'phone' => $request->phone,
@@ -88,7 +87,7 @@ class OperatorController extends Controller
     public function show($id)
     {
         $title = 'Operator Table';
-        $tables = UserOperator::where('id', $id)->first();
+        $tables = User::where('id', $id)->first();
         return view('operators.operators.show', compact([
             'title',
             'tables'
@@ -105,7 +104,7 @@ class OperatorController extends Controller
     {
         $title = 'Operator Table';
         $roles = Role::where('id', 1)->orWhere('id', 2)->get();
-        $tables = UserOperator::with('user')->where('id', $id)->first();
+        $tables = User::with('user')->where('id', $id)->first();
         return view('operators.operators.edit', compact([
             'title', 'tables', 'roles'
         ]));
@@ -134,7 +133,7 @@ class OperatorController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        UserOperator::where('user_id', $id)->update([
+        User::where('user_id', $id)->update([
             'user_id' => $id,
             'name' => $request->name,
             'phone' => $request->phone,
@@ -152,7 +151,7 @@ class OperatorController extends Controller
      */
     public function destroy($id)
     {
-        UserOperator::where('user_id', $id)->delete();
+        User::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
         return redirect('/operator/operator')->with('success', 'Data deleted successfully!');
     }

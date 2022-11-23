@@ -46,7 +46,7 @@ class User extends Authenticatable
     ];
 
     public function role(){
-        $this->belongsTo(User::class, 'role_id', 'id');
+        $this->belongsTo(\App\Models\User::class, 'role_id', 'id');
     }
 
     public function user_order_schedule(){

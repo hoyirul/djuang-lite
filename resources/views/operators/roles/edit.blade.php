@@ -18,8 +18,8 @@
         @method('PUT')
         <div class="form-group">
           <label for="">Role Name : </label>
-          <input type="text" name="role_name" id="role_name" class="form-control @error('role_name') is-invalid @enderror" placeholder="Role Name" value="{{ $tables->role_name }}">
-          @error('role_name')
+          <input type="text" name="role" id="role" class="form-control @error('role') is-invalid @enderror" placeholder="Role Name" value="{{ $tables->role }}">
+          @error('role')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
             </span>

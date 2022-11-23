@@ -13,6 +13,7 @@ use App\Http\Controllers\Operator\RecipeController;
 use App\Http\Controllers\Operator\RoleController;
 use App\Http\Controllers\Operator\SellerController;
 use App\Http\Controllers\Operator\SettingController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Operator\TransactionController;
 use App\Http\Controllers\Operator\UnitController;
 use Illuminate\Support\Facades\Artisan;
@@ -89,7 +90,7 @@ Route::middleware('auth')->group(function(){
         Route::resource('plotting', PlottingController::class);
 
         Route::middleware('isSuperadmin')->group(function(){
-            Route::resource('role', RoleController::class);
+            Route::resource('role', TestController::class);
             Route::resource('operator', OperatorController::class);
             Route::resource('customer', CustomerController::class);
             Route::resource('seller', SellerController::class);

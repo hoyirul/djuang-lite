@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Operator;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,8 @@ class RoleController extends Controller
     public function index()
     {
         $title = 'Role Table';
-        $tables = Role::all();
+        $tables = Role::withCount('user')->get();
+        dd($tables);
         return view('operators.roles.index', compact([
             'title',
             'tables'
