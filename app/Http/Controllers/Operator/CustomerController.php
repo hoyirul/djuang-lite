@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Operator;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\UserCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -18,7 +17,7 @@ class CustomerController extends Controller
      */
     public function index(){
         $title = 'Customer Table';
-        $tables = UserCustomer::with('user')->get();
+        $tables = User::with('role')->where('role_id', 4)->get();
         return view('operators.customers.index', compact([
             'title', 'tables'
         ]));
@@ -33,8 +32,8 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $title = 'Customer Table';
-        $roles = Role::where('id', 3)->get();
-        $tables = UserCustomer::with('user')->where('id', $id)->first();
+        $roles = Role::where('id', 4)->get();
+        $tables = User::with('role')->where('id', $id)->first();
         return view('operators.customers.edit', compact([
             'title', 'tables', 'roles'
         ]));
@@ -63,7 +62,7 @@ class CustomerController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        UserCustomer::where('user_id', $id)->update([
+        User::where('user_id', $id)->update([
             'user_id' => $id,
             'name' => $request->name,
             'phone' => $request->phone,
@@ -81,7 +80,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        UserCustomer::where('user_id', $id)->delete();
+        User::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
         return redirect('/operator/customer')->with('success', 'Data deleted successfully!');
     }

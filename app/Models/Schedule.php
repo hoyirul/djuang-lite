@@ -12,13 +12,15 @@ class Schedule extends Model
     protected $fillable = [
         'date_start',
         'date_end',
-        'time_departure',
-        'time_arrival',
-        'address',
+        'pickup_address',
+        'destination_address',
+        'pickup_return_address',
+        'time_pickup',
+        'time_return',
         'information',
     ];
 
-    public function uuser_order_schedule(){
-        $this->hasOne(UserOrderSchedule::class);
+    public function order(){
+        return $this->hasMany(Order::class);
     }
 }

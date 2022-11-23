@@ -10,11 +10,20 @@ class Order extends Model
     use HasFactory;
 
     public $incrementing = false;
+    public $primaryKey = 'id';
     protected $fillable = [
-        'id', 'order_date', 'total', 'status'
+        'id', 'customer_id', 'driver_id', 'schedules_id','order_date', 'total', 'status'
     ];
 
-    public function user_order_schedule(){
-        $this->hasOne(UserOrderSchedule::class);
+    public function customer(){
+        return $this->belongsTo(User::class, 'customer_id', 'id');
+    }
+
+    public function driver(){
+        return $this->belongsTo(User::class, 'driver_id', 'id');
+    }
+
+    public function schedule(){
+        return $this->belongsTo(Schedule::class, 'schedule_id', 'id');
     }
 }

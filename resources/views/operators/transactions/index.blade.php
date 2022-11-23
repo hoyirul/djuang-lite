@@ -29,7 +29,7 @@
               <th width="20px">#</th>
               <th>TXID</th>
               <th>Customer Name</th>
-              <th>Seller Name</th>
+              <th>Driver Name</th>
               <th>Date Order</th>
               <th>Promo</th>
               <th>PPN</th>
@@ -42,9 +42,9 @@
             @foreach ($tables as $item)
               <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{ $item->txid }}</td>
-                <td>{{ $item->user_customer->name }}</td>
-                <td>{{ $item->user_seller->name }}</td>
+                <td>{{ $item->id }}</td>
+                <td>{{ $item->customer->name }}</td>
+                <td>{{ $item->driver->name }}</td>
                 <td>{{ $item->date_order }}</td>
                 <td>Rp. {{ number_format(($item->promo == null) ? 0 : $item->promo->promo_total) }}</td>
                 <td>Rp. {{ number_format(\App\Http\Controllers\Operator\TransactionController::get_calc($item->txid)['ppn']) }}</td>

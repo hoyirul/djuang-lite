@@ -29,7 +29,7 @@
             <tr>
               <th width="20px">#</th>
               <th>Email</th>
-              <th>Category</th>
+              <th>Name</th>
               <th>Phone</th>
               <th>Role</th>
               <th>Action</th>
@@ -44,7 +44,7 @@
                 <td>{{ $item->phone }}</td>
                 <td>{{ $item->role->role }}</td>
                 <td>
-                  <form action="/operator/operator/{{ $item->user->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
+                  <form action="/operator/operator/{{ $item->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
                     @csrf
                     @method('DELETE')
   

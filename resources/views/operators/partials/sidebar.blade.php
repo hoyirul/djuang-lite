@@ -50,6 +50,7 @@
         <h6 class="collapse-header">Master Data</h6>
         @if (Auth::user()->role_id == 1)
           <a class="collapse-item {{ ($title == 'Role Table') ? 'active' : '' }}" href="/operator/role">Roles</a>
+          <a class="collapse-item {{ ($title == 'Plotting Table') ? 'active' : '' }}" href="/operator/plotting">Plottings</a>
         @endif
       </div>
     </div>

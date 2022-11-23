@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->date('date_start')->nullable();
             $table->date('date_end')->nullable();
-            $table->time('time_departure')->nullable();
-            $table->time('time_arrival')->nullable();
-            $table->text('address')->nullable();
+            $table->text('pickup_address')->nullable();
+            $table->text('destination_address')->nullable();
+            $table->text('pickup_return_address')->nullable();
+            $table->time('time_pickup')->nullable();
+            $table->time('time_return')->nullable();
             $table->text('information')->nullable();
             $table->timestamps();
         });

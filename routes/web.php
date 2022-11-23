@@ -2,20 +2,14 @@
 
 use App\Http\Controllers\Operator\CategoryController;
 use App\Http\Controllers\Operator\CustomerController;
+use App\Http\Controllers\Operator\DriverController;
 use App\Http\Controllers\Operator\HomeController;
 use App\Http\Controllers\Operator\OperatorController;
 use App\Http\Controllers\Operator\PaymentController;
 use App\Http\Controllers\Operator\PlottingController;
-use App\Http\Controllers\Operator\ProductRecipeController;
-use App\Http\Controllers\Operator\PromoController;
-use App\Http\Controllers\Operator\RecipeCategoryController;
-use App\Http\Controllers\Operator\RecipeController;
 use App\Http\Controllers\Operator\RoleController;
-use App\Http\Controllers\Operator\SellerController;
 use App\Http\Controllers\Operator\SettingController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\Operator\TransactionController;
-use App\Http\Controllers\Operator\UnitController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -58,14 +52,6 @@ Route::middleware('auth')->group(function(){
             Route::put('/update_profile', 'update_profile');
         });
 
-        Route::resource('recipe', RecipeController::class);
-        Route::controller(ProductRecipeController::class)->group(function(){
-            Route::get('/product_recipe/{id}/show', 'index');
-            Route::post('/product_recipe', 'store');
-            Route::delete('/product_recipe/{id}/{recipe_id}', 'destroy');
-        });
-        Route::resource('product_recipe', ProductRecipeController::class);
-
         Route::controller(TransactionController::class)->group(function() {
             Route::get('/transaction', 'index');
         });
@@ -83,17 +69,13 @@ Route::middleware('auth')->group(function(){
             Route::get('/payment/{txid}/waiting', 'waiting_put');
         });
 
-        Route::resource('promo', PromoController::class);
-        Route::resource('category', CategoryController::class);
-        Route::resource('recipe_category', RecipeCategoryController::class);
-        Route::resource('unit', UnitController::class);
         Route::resource('plotting', PlottingController::class);
 
         Route::middleware('isSuperadmin')->group(function(){
-            Route::resource('role', TestController::class);
+            Route::resource('role', RoleController::class);
             Route::resource('operator', OperatorController::class);
             Route::resource('customer', CustomerController::class);
-            Route::resource('seller', SellerController::class);
+            Route::resource('driver', DriverController::class);
         });
     });
 });

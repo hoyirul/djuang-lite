@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Operator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -17,7 +16,8 @@ class RoleController extends Controller
     public function index()
     {
         $title = 'Role Table';
-        $tables = Role::all();
+        $tables = Role::with('user')
+                        ->get();
         return view('operators.roles.index', compact([
             'title',
             'tables'
@@ -46,11 +46,11 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'role' => 'required',
+            'role_name' => 'required',
         ]);
 
         Role::create([
-            'role' => $request->role,
+            'role_name' => $request->role_name,
         ]);
 
         return redirect()->to('/operator/role')
@@ -98,11 +98,11 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'role' => 'required',
+            'role_name' => 'required',
         ]);
 
         Role::where('id', $id)->update([
-            'role' => $request->role,
+            'role_name' => $request->role_name,
         ]);
 
         return redirect()->to('/operator/role')
@@ -117,9 +117,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = User::where('role_id', $id)->first();
-        if($role != null){
-            return redirect('/operator/role')->with('danger', 'This role ('.$role->role.') is still used by user!');
+        $role = Role::withCount('user')->where('id', $id)->first();
+        if($role->count() > 0){
+            return redirect('/operator/role')->with('danger', 'This role ('.$role->role_name.') is still used by user!');
         }else{
             Role::where('id', $id)->delete();
             return redirect('/operator/role')->with('success', 'Data deleted successfully!');

@@ -20,7 +20,7 @@ class OperatorController extends Controller
      */
     public function index(){
         $title = 'Operator Table';
-        $tables = User::with('role')->get();
+        $tables = User::with('role')->where('role_id', 1)->orWhere('role_id', 2)->get();
         return view('operators.operators.index', compact([
             'title', 'tables'
         ]));

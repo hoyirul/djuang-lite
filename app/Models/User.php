@@ -46,14 +46,14 @@ class User extends Authenticatable
     ];
 
     public function role(){
-        $this->belongsTo(\App\Models\User::class, 'role_id', 'id');
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
-    public function user_order_schedule(){
-        $this->hasMany(UserOrderSchedule::class);
+    public function order(){
+        return $this->hasMany(Order::class);
     }
 
     public function payment(){
-        $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class);
     }
 }

@@ -29,7 +29,7 @@
             <tr>
               <th width="20px">#</th>
               <th>Email</th>
-              <th>Category</th>
+              <th>Name</th>
               <th>Phone</th>
               <th>Role</th>
               <th>Action</th>
@@ -39,12 +39,12 @@
             @foreach ($tables as $item)
               <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{ $item->user->email }}</td>
+                <td>{{ $item->email }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->phone }}</td>
-                <td>{{ $item->user->role->role_name }}</td>
+                <td>{{ $item->role->role }}</td>
                 <td>
-                  <form action="/operator/customer/{{ $item->user->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
+                  <form action="/operator/customer/{{ $item->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
                     @csrf
                     @method('DELETE')
   

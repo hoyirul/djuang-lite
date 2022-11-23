@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->string('id')->primary();
+            $table->bigInteger('customer_id')->nullable();
+            // $table->foreign('customer_id')->references('id')->on('users');
+            $table->bigInteger('driver_id')->nullable();
+            // $table->foreign('driver_id')->references('id')->on('users');
+            $table->foreignId('schedules_id')->constrained();
             $table->date('order_date')->nullable();
             $table->float('total');
             $table->enum('status', ['pending', 'processing', 'done'])->default('pending');
