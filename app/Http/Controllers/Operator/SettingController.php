@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Operator;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserOperator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +34,7 @@ class SettingController extends Controller
 
     public function change_profile(){
         $title = 'Change Profile';
-        $tables = UserOperator::where('user_id', Auth::user()->id)->first();
+        $tables = User::where('id', Auth::user()->id)->first();
         return view('operators.settings.change_profile', compact([
             'title', 'tables'
         ]));
@@ -58,16 +57,12 @@ class SettingController extends Controller
         if($request->image != null){
             $image = $request->file('image')->store('profile/'. Auth::user()->id, 'public');
         }
-
-        User::where('id', Auth::user()->id)
-            ->update([
-                'image' => ($image == null) ? Auth::user()->image : $image
-            ]);
         
-        UserOperator::where('user_id', Auth::user()->id)
+        User::where('id', Auth::user()->id)
             ->update([
                 'name' => $request->name,
                 'phone' => $request->phone,
+                'image' => ($image == null) ? Auth::user()->image : $image
             ]);
         
         return redirect()->back()
