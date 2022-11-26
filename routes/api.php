@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +34,22 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('profile/{user_id}', 'show_profile');
             Route::put('profile/{user_id}', 'update_profile');
             Route::put('password/{user_id}', 'update_password');
+        });
+    });
+
+    Route::controller(OrderController::class)->group(function(){
+        Route::prefix('orders')->group(function(){
+            Route::get('/', 'index');
+            Route::get('/{id}', 'show');
+            Route::get('/{customer_id}', 'show_by_customer');
+            Route::get('/{driver_id}', 'show_by_driver');
+        });
+    });
+
+    Route::controller(ScheduleController::class)->group(function(){
+        Route::prefix('schedules')->group(function(){
+            Route::get('/', 'index');
+            Route::get('/{id}', 'show');
         });
     });
 
