@@ -10,6 +10,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -59,8 +60,10 @@ class SettingController extends Controller
     public function update_password(PasswordUpdateRequest $request, $id){
         $validated = $request->validated();
         
-        if(!Auth::attempt('password', $validated)){
-            return $this->apiError('Credentials not match', Response::HTTP_UNAUTHORIZED);
+        $check = User::where('id', $id)->first();
+
+        if (!(Hash::check($validated['old_password'], $check->password))) {
+            return $this->apiError('Your old password doesn`t match!', 400);
         }
 
         User::where('id', $id)->update([
