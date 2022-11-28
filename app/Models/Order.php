@@ -12,7 +12,7 @@ class Order extends Model
     public $incrementing = false;
     public $primaryKey = 'id';
     protected $fillable = [
-        'id', 'customer_id', 'driver_id', 'schedules_id','order_date', 'total', 'status'
+        'id', 'customer_id', 'driver_id', 'schedule_id','order_date', 'total', 'status'
     ];
 
     public function customer(){

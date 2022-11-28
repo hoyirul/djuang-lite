@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('schedules')->group(function(){
             Route::get('/', 'index');
             Route::get('/{id}', 'show');
+            Route::get('customer/{customer_id}', 'show_by_customer');
         });
     });
 

@@ -18,6 +18,7 @@ class Schedule extends Model
         'time_pickup',
         'time_return',
         'information',
+        'status'
     ];
 
     public function order(){
