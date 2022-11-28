@@ -58,14 +58,35 @@ class AuthController extends Controller
         }
     }
 
-    public function register(RegisterRequest $request)
+    public function register_customer(RegisterRequest $request)
     {
         $validated = $request->validated();
 
         $user = User::create([
+            'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role_id' => $validated['role_id']
+            'role_id' => $validated['role_id'],
+        ]);
+
+        $token = $user->createToken($validated['email'])->plainTextToken;
+
+        return $this->apiSuccess([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user
+        ]);
+    }
+
+    public function register_driver(RegisterRequest $request)
+    {
+        $validated = $request->validated();
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role_id' => $validated['role_id'],
         ]);
 
         $token = $user->createToken($validated['email'])->plainTextToken;
