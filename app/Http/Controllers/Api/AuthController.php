@@ -16,19 +16,46 @@ class AuthController extends Controller
 {
     use ApiResponse;
 
-    public function login(LoginRequest $request){
+    public function login_customer(LoginRequest $request){
         $validated = $request->validated();
-        if(!Auth::attempt($validated)){
-            return $this->apiError('Credentials not match', Response::HTTP_UNAUTHORIZED);
-        }
-        $user = User::where('email', $validated['email'])->first();
-        $token = $user->createToken($validated['email'])->plainTextToken;
+        $check = User::where('email', $validated['email'])->where('role_id', 4)->first();
 
-        return $this->apiSuccess([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user
-        ]);
+        if($check == null){
+            return $this->apiError('You`re not user customer!', 400);
+        }else{
+            if(!Auth::attempt($validated)){
+                return $this->apiError('Credentials not match', Response::HTTP_UNAUTHORIZED);
+            }
+            $user = User::where('email', $validated['email'])->first();
+            $token = $user->createToken($validated['email'])->plainTextToken;
+    
+            return $this->apiSuccess([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'user' => $user
+            ]);
+        }
+    }
+
+    public function login_driver(LoginRequest $request){
+        $validated = $request->validated();
+        $check = User::where('email', $validated['email'])->where('role_id', 3)->first();
+
+        if($check == null){
+            return $this->apiError('You`re not user driver!', 400);
+        }else{
+            if(!Auth::attempt($validated)){
+                return $this->apiError('Credentials not match', Response::HTTP_UNAUTHORIZED);
+            }
+            $user = User::where('email', $validated['email'])->first();
+            $token = $user->createToken($validated['email'])->plainTextToken;
+    
+            return $this->apiSuccess([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'user' => $user
+            ]);
+        }
     }
 
     public function register(RegisterRequest $request)

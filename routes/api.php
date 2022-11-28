@@ -23,7 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/login/driver', [AuthController::class, 'login_driver']);
+Route::post('/auth/login/customer', [AuthController::class, 'login_customer']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
