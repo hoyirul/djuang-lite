@@ -33,7 +33,8 @@ class ScheduleController extends Controller
             $response = Schedule::join('orders', 'schedules.id', '=', 'orders.schedule_id')
                         ->where('orders.customer_id', $customer_id)
                         ->first();
-            return $this->apiSuccess($response);
+            // return response()->json([$response], 200);
+            return $this->apiSuccess([$response]);
         }else{
             return $this->apiError('Data is still empty', 204);
         }
@@ -49,6 +50,7 @@ class ScheduleController extends Controller
             $response = Schedule::join('orders', 'schedules.id', '=', 'orders.schedule_id')
                         ->where('orders.driver_id', $driver_id)
                         ->first();
+            // return response()->json([$response], 200);
             return $this->apiSuccess($response);
         }else{
             return $this->apiError('Data is still empty', 204);
