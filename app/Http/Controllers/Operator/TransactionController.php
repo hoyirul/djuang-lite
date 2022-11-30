@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Operator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -16,11 +17,10 @@ class TransactionController extends Controller
     public function index()
     {
         $title = 'Transaction Table';
-        $tables = Order::with('schedule')->with('customer')->with('driver')
-                        ->get();
+        $drivers = User::where('role_id', 3)->get();
+        $tables = Order::with('customer')->with('driver')->with('schedule')->get();
         return view('operators.transactions.index', compact([
-            'title',
-            'tables'
+            'title', 'tables', 'drivers'
         ]));
     }
 
@@ -49,9 +49,38 @@ class TransactionController extends Controller
     public function edit($id)
     {
         $title = 'Transaction Table';
-        $tables = Order::where('id', $id)->first();
+        $drivers = User::where('role_id', 3)->where('status', 'unused')->get();
+        $tables = Order::with('customer')->with('driver')->with('schedule')->where('id', $id)->first();
         return view('operators.transactions.edit', compact([
-            'title', 'tables'
+            'title', 'tables', 'drivers'
         ]));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'driver_id' => 'required',
+            'total' => 'required',
+        ]);
+
+        User::where('id', $request->driver_id)->update([
+            'status' => 'used'
+        ]);
+
+        Order::where('id', $id)->update([
+            'driver_id' => $request->driver_id,
+            'total' => $request->total,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->to('/operator/transaction')
+                    ->with('success', 'Data changed successfully!');
     }
 }

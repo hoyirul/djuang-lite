@@ -42,9 +42,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(OrderController::class)->group(function(){
         Route::prefix('orders')->group(function(){
             Route::get('/', 'index');
+            Route::post('/', 'store');
             Route::get('/{id}', 'show');
-            Route::get('/{customer_id}', 'show_by_customer');
-            Route::get('/{driver_id}', 'show_by_driver');
+            Route::get('/{customer_id}/customer', 'show_by_customer');
+            Route::get('/{driver_id}/customer', 'show_by_driver');
         });
     });
 

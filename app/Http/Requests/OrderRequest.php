@@ -26,7 +26,15 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'customer_id' => 'required',
+            'date_start' => 'required',
+            'date_end' => 'required',
+            'pickup_address' => 'required|string|max:255',
+            'destination_address' => 'required|string|max:255',
+            'pickup_return_address' => 'required|string|max:255',
+            'time_pickup' => 'required',
+            'time_return' => 'required',
+            'information' => 'nullable|string',
         ];
     }
 

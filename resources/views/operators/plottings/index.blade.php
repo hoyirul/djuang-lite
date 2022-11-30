@@ -39,12 +39,12 @@
             @foreach ($tables as $item)
               <tr>
                 <td class="text-center">
-                  <a href="/operator/transaction/{{ $item->id }}/edit" class="btn btn-sm btn-info">
+                  <a href="/operator/category/{{ $item->id }}/edit" class="btn btn-sm btn-info">
                     <span class="fa fa-fw fa-edit mx-1"></span>
                     Confirmation
                   </a>
                 </td>
-                <td class="text-center"><a href="/operator/payment/{{ $item->id }}">{{ $item->id }}</a></td>
+                <td>{{ $item->id }}</td>
                 <td>{{ $item->customer->name }}</td>
                 <td>{{ ($item->driver_id == 0) ? 'Null' : $item->driver->name }}</td>
                 <td>Rp. {{ number_format($item->total) }}</td>

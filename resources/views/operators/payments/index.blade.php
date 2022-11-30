@@ -28,6 +28,7 @@
             <tr>
               <th width="20px">#</th>
               <th>TXID</th>
+              <th>Customer</th>
               <th>Bukti</th>
               <th>Date Order</th>
               <th>Total</th>
@@ -39,18 +40,26 @@
             @foreach ($tables as $item)
               <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{ $item->txid }}</td>
+                <td>{{ $item->order_id }}</td>
+                <td>{{ $item->order->customer->name }}</td>
                 <td class="text-center">
-                  <a href="{{ asset('storage/'.$item->evidence_of_transfer) }}" class="text-center btn btn-sm btn-info" target="_blank">{{ 'check' }}</a>
+                  @if ($item->evidence_of_transfer == null)
+                    Null
+                  @else
+                    <a href="{{ asset('storage/'.$item->evidence_of_transfer) }}" class="text-center btn btn-sm btn-info" target="_blank">{{ 'check' }}</a>
+                  @endif
                 </td>
-                <td>{{ $item->header_transaction->date_order }}</td>
-                <td>Rp. {{ number_format($item->header_transaction->total) }}</td>
+                <td>{{ $item->order->order_date }}</td>
+                <td>Rp. {{ number_format($item->order->total) }}</td>
                 <td>{{ $item->status }}</td>
                 <td class="text-center">
-                  <a href="/operator/payment/{{ $item->txid }}/paid" class="text-center btn btn-sm btn-success" onclick="return confirm('Apakah anda yakin?')">{{ 'paid' }}</a>
-                  <a href="/operator/payment/{{ $item->txid }}/unpaid" class="text-center btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')">{{ 'unpaid' }}</a>
-                  <a href="/operator/payment/{{ $item->txid }}/processing" class="text-center btn btn-sm btn-warning" onclick="return confirm('Apakah anda yakin?')">{{ 'processing' }}</a>
-                  <a href="/operator/payment/{{ $item->txid }}/waiting" class="text-center btn btn-sm btn-info" onclick="return confirm('Apakah anda yakin?')">{{ 'done' }}</a>
+                  @if ($item->status == 'paid')
+                    <a href="#" class="text-center btn btn-sm btn-success">{{ 'Paid' }}</a>
+                  @elseif($item->status == 'processing')
+                    <a href="/operator/payment/{{ $item->order_id }}/paid" class="text-center btn btn-sm btn-info" onclick="return confirm('Apakah anda yakin?')">{{ 'Confirmation Done' }}</a>
+                  @else
+                    <a href="/operator/payment/{{ $item->order_id }}/processing" class="text-center btn btn-sm btn-primary" onclick="return confirm('Apakah anda yakin?')">{{ 'Confirmation' }}</a>
+                  @endif
                 </td>
               </tr>
             @endforeach

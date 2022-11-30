@@ -54,19 +54,15 @@ Route::middleware('auth')->group(function(){
 
         Route::controller(TransactionController::class)->group(function() {
             Route::get('/transaction', 'index');
+            Route::get('/transaction/{id}/edit', 'edit');
+            Route::put('/transaction/{id}', 'update');
         });
 
         Route::controller(PaymentController::class)->group(function() {
-            Route::get('/payment/all', 'index');
-            Route::get('/payment/paid', 'paid');
-            Route::get('/payment/unpaid', 'unpaid');
-            Route::get('/payment/processing', 'processing');
-            Route::get('/payment/waiting', 'waiting');
-            Route::get('/payment/canceled', 'canceled');
+            Route::get('/payment', 'index');
             Route::get('/payment/{txid}/paid', 'paid_put');
-            Route::get('/payment/{txid}/unpaid', 'unpaid_put');
             Route::get('/payment/{txid}/processing', 'processing_put');
-            Route::get('/payment/{txid}/waiting', 'waiting_put');
+            Route::get('/payment/{txid}', 'show');
         });
 
         Route::resource('plotting', PlottingController::class);
