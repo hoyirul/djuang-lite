@@ -69,12 +69,16 @@ class OrderController extends Controller
     }
 
     public function show_by_customer($customer_id){
-        $response = Order::with('schedule')->where('customer_id', $customer_id)->orderBy('created_at', 'DESC')->get();
+        $response = Order::with('schedule')->with('customer')->with('driver')
+                    ->where('customer_id', $customer_id)
+                    ->orderBy('created_at', 'DESC')->get();
         return $this->apiSuccess($response);
     }
 
     public function show_by_driver($driver_id){
-        $response = Order::with('schedule')->where('driver_id', $driver_id)->orderBy('created_at', 'DESC')->get();
+        $response = Order::with('schedule')->with('customer')->with('driver')
+                    ->where('driver_id', $driver_id)
+                    ->orderBy('created_at', 'DESC')->get();
         return $this->apiSuccess($response);
     }
 

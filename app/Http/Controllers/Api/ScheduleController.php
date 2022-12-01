@@ -57,7 +57,7 @@ class ScheduleController extends Controller
                         ->where('orders.status', 'processing')
                         ->first();
             // return response()->json([$response], 200);
-            return $this->apiSuccess($response);
+            return $this->apiSuccess([$response]);
         }else{
             return $this->apiError('Data is still empty', 204);
         }

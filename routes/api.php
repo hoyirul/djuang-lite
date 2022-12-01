@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/', 'store');
             Route::get('/{id}', 'show');
             Route::get('/{customer_id}/customer', 'show_by_customer');
-            Route::get('/{driver_id}/customer', 'show_by_driver');
+            Route::get('/{driver_id}/driver', 'show_by_driver');
         });
     });
 
@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/', 'index');
             Route::get('/{id}', 'show');
             Route::get('customer/{customer_id}', 'show_by_customer');
+            Route::get('driver/{driver_id}', 'show_by_driver');
         });
     });
 
