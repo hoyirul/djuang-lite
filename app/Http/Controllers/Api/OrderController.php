@@ -48,7 +48,7 @@ class OrderController extends Controller
         Order::create([
             'id' => $id,
             'customer_id' => $validated['customer_id'],
-            'driver_id' => 0,
+            'driver_id' => 3,
             'schedule_id' => $row->id,
             'order_date' => Carbon::now(),
             'total' => 0,

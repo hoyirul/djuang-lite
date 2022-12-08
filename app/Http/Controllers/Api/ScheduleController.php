@@ -36,30 +36,42 @@ class ScheduleController extends Controller
                             ->where('orders.status', 'processing')
                             ->first();
                 // return response()->json([$response], 200);
-                return $this->apiSuccess([$response]);
+                if($response == null){
+                    return $this->apiError('Don`t have schedule!', 204);
+                }else{
+                    return $this->apiSuccess([$response]);
+                }
             }else{
                 return $this->apiError('Data is still empty!', 204);
             }
         }else{
-            return $this->apiError('Data is still empty!', 400);
+            return $this->apiError('Data is still empty!', 204);
         }
     }
 
     public function show_by_driver($driver_id){
         $orders = Order::with('schedule')->where('driver_id', $driver_id)->first();
-        $from = strtotime(Carbon::now()->format('Y-m-d'));
-        $to = strtotime($orders->schedule->date_end);
-        $difference = ($to - $from) / 60 / 60 / 24;
 
-        if($difference > 0){
-            $response = Schedule::join('orders', 'schedules.id', '=', 'orders.schedule_id')
-                        ->where('orders.driver_id', $driver_id)
-                        ->where('orders.status', 'processing')
-                        ->first();
-            // return response()->json([$response], 200);
-            return $this->apiSuccess([$response]);
+        if($orders != null){
+            $from = strtotime(Carbon::now()->format('Y-m-d'));
+            $to = strtotime($orders->schedule->date_end);
+            $difference = ($to - $from) / 60 / 60 / 24;
+            if($difference > 0){
+                $response = Schedule::join('orders', 'schedules.id', '=', 'orders.schedule_id')
+                            ->where('orders.driver_id', $driver_id)
+                            ->where('orders.status', 'processing')
+                            ->first();
+                // return response()->json([$response], 200);
+                if($response == null){
+                    return $this->apiError('Don`t have schedule!', 204);
+                }else{
+                    return $this->apiSuccess([$response]);
+                }
+            }else{
+                return $this->apiError('Data is still empty!', 204);
+            }
         }else{
-            return $this->apiError('Data is still empty', 204);
+            return $this->apiError('Data is still empty!', 204);
         }
     }
 }

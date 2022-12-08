@@ -22,7 +22,7 @@
             <label for="">Choice Driver : </label>
             <select name="driver_id" id="driver_id" class="form-control @error('driver_id') is-invalid @enderror">
               @foreach ($drivers as $row)
-                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                <option value="{{ $row->id }}" {{ ($row->id == 3) ? 'disabled selected' : '' }}>{{ $row->name }}</option>
               @endforeach
             </select>
             @error('driver_id')

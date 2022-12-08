@@ -77,7 +77,7 @@ class TransactionController extends Controller
         Order::where('id', $id)->update([
             'driver_id' => $request->driver_id,
             'total' => $request->total,
-            'status' => 'pending',
+            'status' => 'processing',
         ]);
 
         return redirect()->to('/operator/transaction')
