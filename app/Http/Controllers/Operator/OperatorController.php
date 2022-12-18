@@ -52,7 +52,6 @@ class OperatorController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users|max:255',
             'phone' => 'required|string',
-            'role_id' => 'required',
             'password' => 'required|min:8|string',
             'confirmation_password' => 'required|min:8|same:password|string',
         ]);
@@ -63,7 +62,7 @@ class OperatorController extends Controller
             'username' => $username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
+            'role_id' => 2,
         ]);
 
         $user = User::latest()->first();
@@ -104,7 +103,7 @@ class OperatorController extends Controller
     {
         $title = 'Operator Table';
         $roles = Role::where('id', 1)->orWhere('id', 2)->get();
-        $tables = User::with('user')->where('id', $id)->first();
+        $tables = User::with('role')->where('id', $id)->first();
         return view('operators.operators.edit', compact([
             'title', 'tables', 'roles'
         ]));
@@ -122,7 +121,6 @@ class OperatorController extends Controller
         $request->validate([
             'name' => 'required',
             'phone' => 'required|string',
-            'role_id' => 'required',
         ]);
 
         $username = Str::slug($request->name, '-');
@@ -130,7 +128,7 @@ class OperatorController extends Controller
         User::where('id', $id)->update([
             'username' => $username,
             'email' => $request->email,
-            'role_id' => $request->role_id,
+            'role_id' => 2,
         ]);
 
         User::where('user_id', $id)->update([

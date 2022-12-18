@@ -44,11 +44,11 @@
                 <td>{{ $item->phone }}</td>
                 <td>{{ $item->role->role }}</td>
                 <td>
-                  <form action="/operator/seller/{{ $item->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
+                  <form action="/operator/driver/{{ $item->id }}" onsubmit="return confirm('Are you sure to delete data?')" method="post">
                     @csrf
                     @method('DELETE')
   
-                    <a href="/operator/seller/{{ $item->id }}/edit" class="btn btn-sm btn-info">
+                    <a href="/operator/driver/{{ $item->id }}/edit" class="btn btn-sm btn-info">
                       <span class="fa fa-fw fa-edit mx-1"></span>
                       Edit
                     </a>
